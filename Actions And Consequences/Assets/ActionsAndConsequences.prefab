@@ -3506,7 +3506,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4279184455
+    rgba: 4281673243
 --- !u!102 &102069853371731468
 TextMesh:
   serializedVersion: 3
@@ -3514,7 +3514,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680470864469392}
-  m_Text: A & C
+  m_Text: '-  -  -  -  -'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -3548,7 +3548,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4280441472
+    rgba: 4281673243
 --- !u!102 &102096794747966226
 TextMesh:
   serializedVersion: 3
@@ -3569,7 +3569,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4280441472
+    rgba: 4281673243
 --- !u!102 &102104388721801478
 TextMesh:
   serializedVersion: 3
@@ -3611,7 +3611,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4279184455
+    rgba: 4281673243
 --- !u!102 &102230257606665292
 TextMesh:
   serializedVersion: 3
@@ -3653,7 +3653,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4279184455
+    rgba: 4281673243
 --- !u!102 &102329186859847340
 TextMesh:
   serializedVersion: 3
@@ -3674,7 +3674,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4280441472
+    rgba: 4281673243
 --- !u!102 &102335375766010868
 TextMesh:
   serializedVersion: 3
@@ -3695,7 +3695,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4280441472
+    rgba: 4281673243
 --- !u!102 &102336229114049500
 TextMesh:
   serializedVersion: 3
@@ -3758,7 +3758,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4279184455
+    rgba: 4281673243
 --- !u!102 &102487248316491742
 TextMesh:
   serializedVersion: 3
@@ -3800,7 +3800,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 9764785bc6a56594fbb8832f4dbfca34, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4279184455
+    rgba: 4281673243
 --- !u!114 &114002427357594472
 MonoBehaviour:
   m_ObjectHideFlags: 1
