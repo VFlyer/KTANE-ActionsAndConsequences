@@ -14,11 +14,19 @@ MonoBehaviour:
   id: ActionsAndConsequences
   title: Actions and Consequences
   author: cerulean
-  description: 'At this point, boss modules use more information than the government.
+  description: '"At this point, boss modules use more information than the government."
 
 
     Submit a string of letters after solving, striking, or receiving random numbered
-    blocks.'
+    blocks.
+
+
+    Manual (HTML): coming soon
+
+    Manual (PDF): coming soon (can also be found in your games folder)
+
+
+    Idea and manual by GhostSalt'
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 7c8bf0f16a8d8bb44a997aa799141d6f, type: 3}
