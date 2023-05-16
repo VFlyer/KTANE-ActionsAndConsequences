@@ -11,10 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: template
-  title: Template
-  author: 
-  description: 
+  id: ActionsAndConsequences
+  title: Actions and Consequences
+  author: cerulean
+  description: 'At this point, boss modules use more information than the government.
+
+
+    Submit a string of letters after solving, striking, or receiving random numbered
+    blocks.'
   version: 
   outputFolder: build
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 2800000, guid: 7c8bf0f16a8d8bb44a997aa799141d6f, type: 3}
