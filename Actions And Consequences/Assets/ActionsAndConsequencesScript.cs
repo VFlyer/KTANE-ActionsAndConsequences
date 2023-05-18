@@ -436,15 +436,15 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         {
             case 0:
                 BlockDisplays[visualIndex].text = "✓";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.0003f, Blocks[visualIndex].transform.position.z);
+                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z);
                 break;
             case 1:
                 BlockDisplays[visualIndex].text = "✗";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.0003f, Blocks[visualIndex].transform.position.z + 0.0008f);
+                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0008f);
                 break;
             default:
                 BlockDisplays[visualIndex].text = blockID + "";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.0003f, Blocks[visualIndex].transform.position.z + 0.0005f);
+                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0005f);
                 break;
         }
     }
@@ -495,9 +495,9 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         //always sets the things to the thing
         for(int i = 0; i < 5; i++)
         {
-            BlockDisplays[i].transform.position = BlockDisplays[i].text.Equals("✓") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.0003f, Blocks[i].transform.position.z) :
-                BlockDisplays[i].text.Equals("✗") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.0003f, Blocks[i].transform.position.z + 0.0008f) :
-                new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.0003f, Blocks[i].transform.position.z + 0.0005f);
+            BlockDisplays[i].transform.position = BlockDisplays[i].text.Equals("✓") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z) :
+                BlockDisplays[i].text.Equals("✗") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0008f) :
+                new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0005f);
         }
         //THANK YOU BLANANAS2
         Solves = Bomb.GetSolvedModuleNames().Count;
@@ -528,7 +528,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         //Debug.LogFormat("[Actions and Consequences #{0}] Solved modules ({1}) - Solved ignored modules ({2}) = {3} ; expect {4}", ModuleId, Bomb.GetSolvedModuleNames().Count, IgnoredSolveds.Count, Bomb.GetSolvedModuleNames().Count - IgnoredSolveds.Count, NonBosses);
         if(SolveList.Count - IgnoredSolved == NonBosses)
         {
-            if (Bomb.GetSolvableModuleNames().Count - IgnoredModules.Length <= 0 || solution.Length == 1)
+            if (/*Bomb.GetSolvableModuleNames().Count - IgnoredModules.Length <= 0*/ NonBosses == 0 || solution.Length == 1)
                 StartCoroutine(YouDidIt());
             else
             {
