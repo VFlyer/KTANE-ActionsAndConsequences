@@ -88,7 +88,12 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         {
             button.OnInteract += delegate ()
             {
-                if (inputMode) CheckPress(button);
+                if (inputMode)
+                {
+                    CheckPress(button);
+                    button.AddInteractionPunch();
+                    Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
+                }
                 return false;
             };
         }
@@ -436,15 +441,15 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         {
             case 0:
                 BlockDisplays[visualIndex].text = "✓";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z);
+                //BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z);
                 break;
             case 1:
                 BlockDisplays[visualIndex].text = "✗";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0008f);
+                //BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0008f);
                 break;
             default:
                 BlockDisplays[visualIndex].text = blockID + "";
-                BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0005f);
+                //BlockDisplays[visualIndex].transform.position = new Vector3(Blocks[visualIndex].transform.position.x, Blocks[visualIndex].transform.position.y + 0.004f, Blocks[visualIndex].transform.position.z + 0.0005f);
                 break;
         }
     }
@@ -489,16 +494,16 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         {
             GenerateNewBlock(GenerateYellowValue());
             delay = (float)(Rnd.Range(SHORTEST, LONGEST + 1));
-            Debug.LogFormat("[Actions and Consequences #{0}] Next number block will fall in {1} seconds.", ModuleId, delay);
+            Debug.LogFormat("[Actions and Consequences #{0}] At {2}, next number block will fall in {1} seconds.", ModuleId, delay, Bomb.GetFormattedTime());
             timer = 0;
         }
         //always sets the things to the thing
-        for(int i = 0; i < 5; i++)
-        {
-            BlockDisplays[i].transform.position = BlockDisplays[i].text.Equals("✓") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z) :
-                BlockDisplays[i].text.Equals("✗") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0008f) :
-                new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0005f);
-        }
+        //for(int i = 0; i < 5; i++)
+        //{
+        //    BlockDisplays[i].transform.position = BlockDisplays[i].text.Equals("✓") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z) :
+        //        BlockDisplays[i].text.Equals("✗") ? new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0008f) :
+        //        new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0005f);
+        //}
         //THANK YOU BLANANAS2
         Solves = Bomb.GetSolvedModuleNames().Count;
         if (Solves > SolveList.Count)
@@ -507,7 +512,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
             //Debug.LogFormat("[Actions and Consequences #{0}] solvableModules = {1}", ModuleId, Bomb.GetSolvableModuleNames().Count);
 
             MostRecent = GetLatestSolve(Bomb.GetSolvedModuleNames(), SolveList);
-            Debug.LogFormat("[Actions and Consequences #{0}] Most recent solve: {1}, SolveList.Count: {2}", ModuleId, MostRecent, SolveList.Count);
+            //Debug.LogFormat("[Actions and Consequences #{0}] Most recent solve: {1}, SolveList.Count: {2}", ModuleId, MostRecent, SolveList.Count);
             if (!(IgnoredModules.Contains(MostRecent)))
             {
                 GenerateNewBlock(0);
