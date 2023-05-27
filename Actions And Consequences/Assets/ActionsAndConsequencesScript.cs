@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using UnityEngine;
 using KModkit;
+using UnityEngine;
 using Rnd = UnityEngine.Random;
 
 public class ActionsAndConsequencesScript : MonoBehaviour {
@@ -230,9 +230,12 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
             RandomizedStr += RandomizedLetters.ElementAt(i);
         }
         Debug.LogFormat("[Actions and Consequences #{0}] Letters on keypad in reading order: {1}", ModuleId, RandomizedStr);
+        _labels = new char[ButtonLabels.Length];
         for (int i = 0; i < 9; i++)
         {
-            ButtonLabels[i].text = RandomizedLetters.ElementAt(i) + "";
+            char newLetter = RandomizedLetters.ElementAt(i);
+            ButtonLabels[i].text = newLetter.ToString();
+            _labels[i] = newLetter;
         }
 
         AddToSolution(-1);
@@ -654,15 +657,66 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
     }
 
     //------------- Kuro my beloved <3 -------------
-    //#pragma warning disable 414
-    //   private readonly string TwitchHelpMessage = @"Use !{0} to do something.";
-    //#pragma warning restore 414
+    //-------------------- <3 - Kuro ---------------
 
-    //   IEnumerator ProcessTwitchCommand (string Command) {
-    //      yield return null;
-    //   }
+#pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"Use '!{0} press <buttons>' to press those buttons; buttons are 1-9 in reading order, or you can use their labels instead.";
+#pragma warning restore 414
 
-    //   IEnumerator TwitchHandleForcedSolve () {
-    //      yield return null;
-    //   }
+    private bool TwitchShouldCancelCommand;
+    private char[] _spaceLol = " ".ToCharArray();
+    private char[] _labels;
+
+    private IEnumerator ProcessTwitchCommand(string command) {
+        string[] commandSplit = command.Trim().ToUpper().Split(_spaceLol, 2);
+
+        if (commandSplit.Length != 2) {
+            yield return "sendtochaterror Invalid command!";
+        }
+
+        // Mandate the use of "PRESS" to prevent accidental inputs.
+        if (commandSplit[0] != "PRESS") {
+            yield return "sendtochaterror You must start the command with 'press', for example '!{1} press 123'";
+        }
+
+        string presses = commandSplit[1].Replace(" ", string.Empty);
+        var positionsToPress = new List<int>();
+        foreach (char p in presses) {
+            if (char.IsDigit(p) && int.Parse(p.ToString()) != 0) {
+                positionsToPress.Add(int.Parse(p.ToString()) - 1);
+            }
+            else if (_labels.Contains(p)) {
+                positionsToPress.Add(Array.IndexOf(_labels, p));
+            }
+            else {
+                yield return "sendtochaterror '" + p + "' is not a valid button to press!";
+            }
+        }
+
+        yield return null;
+        for (int p = 0, q = positionsToPress.Count(); p < q; p++) {
+            Buttons[positionsToPress[p]].OnInteract();
+            yield return new WaitForSeconds(0.1f);
+            if (TwitchShouldCancelCommand) {
+                yield return "sendtochat {0}, Actions and Consequences (id: {1}) processed the first " + (p + 1) + " presses before cancelling.";
+                yield return "cancelled";
+            }
+        }
+    }
+
+    private IEnumerator TwitchHandleForcedSolve() {
+        while (!inputMode) {
+            yield return true;
+        }
+
+        string remainingSolution = solution.Substring(solutionPointer);
+
+        if (recovery) {
+            yield return ProcessTwitchCommand("press 5" + remainingSolution);
+        }
+        else {
+
+            yield return ProcessTwitchCommand("press " + remainingSolution);
+        }
+    }
 }
