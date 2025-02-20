@@ -75,7 +75,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
 
     static int ModuleIdCounter = 1;
     int ModuleId;
-    private bool ModuleSolved;
+    private bool ModuleSolved, Activated;
 
     void Awake () {
         ModuleId = ModuleIdCounter++;
@@ -200,6 +200,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         Module.OnActivate += delegate ()
         {
             NonBosses = Bomb.GetSolvableModuleNames().Where(a => !IgnoredModules.Contains(a)).ToList().Count; //WHAT THE FUCK IS A KILOMETER
+            Activated = true;
         };
         for(int i = 0; i < Bomb.GetModuleNames().Count; i++)
         {
@@ -579,7 +580,8 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
     void Update () {
         if (ModuleSolved || inputMode || TopDisplay.text.Equals("Action!"))
             return;
-        timer += Time.deltaTime;
+        if (Activated)
+            timer += Time.deltaTime;
         if(timer > delay)
         {
             GenerateNewBlock(GenerateYellowValue());
