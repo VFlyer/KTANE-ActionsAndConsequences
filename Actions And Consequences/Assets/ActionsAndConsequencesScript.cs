@@ -312,7 +312,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
             default: // number block
                 int r = blockID / 10 - 1;
                 int c = blockID % 10 - 1;
-                int intersect = numberMap[r,c];
+                int intersect = 1; // numberMap[r,c];
                 Debug.LogFormat("[Actions and Consequences #{0}] For block #{1} with value {2}, first number is {3}.", ModuleId, blockCount, blockID, intersect);
                 prevChar = solution.ElementAt(solution.Length - 1);
                 posOfPrevChar = RandomizedLetters.IndexOf(prevChar);
@@ -408,13 +408,14 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
                         break;
                 }
                 Debug.LogFormat("[Actions and Consequences #{0}] For block #{1} with value {2}, the position of the solution is {3}.", ModuleId, blockCount, blockID, posOfSolution);
-                solution += RandomizedLetters.ElementAt(posOfSolution-1);
+                solution += RandomizedLetters.ElementAt(posOfSolution - 1);
                 break;
         }
         Debug.LogFormat("[Actions and Consequences #{0}] The solution is now \"{1}\".", ModuleId, solution);
     }
     void CheckPress(KMSelectable button)
     {
+        if (ModuleSolved) return;
         int buttonPos = Array.IndexOf(Buttons, button);
         if (!recovery)
         {
@@ -433,6 +434,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
                 solutionPointer++;
                 if (solutionPointer >= solution.Length)
                 {
+                    ModuleSolved = true;
                     StartCoroutine(YouDidIt());
                 }
             }
@@ -480,7 +482,6 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
     }
     IEnumerator YouDidIt()
     {
-        ModuleSolved = true;
         Module.HandlePass();
         TopDisplay.text = "Well done!";
         yield return new WaitForSeconds(3.0f);
