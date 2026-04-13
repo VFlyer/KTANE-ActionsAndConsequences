@@ -33,6 +33,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
     /* 00 = green, 01 = red, 11-99 = yellow */
     /* is there a more efficient way to do this? probably. will i use it? :joy: */
     int Solves;
+    // int NonIgnoredSolveCnt;
     int IgnoredSolved;
     int strikes = 0;
     int NonBosses = 1;
@@ -42,7 +43,6 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
     //int solvableModules;
 
     bool inputMode;
-    int inputLength;
     string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private string MostRecent;
@@ -199,7 +199,6 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         Debug.LogFormat("[Actions and Consequences #{0}] Ignored module count: {1}", ModuleId, IgnoredModules.Length);
         Module.OnActivate += delegate ()
         {
-            NonBosses = Bomb.GetSolvableModuleNames().Where(a => !IgnoredModules.Contains(a)).ToList().Count; //WHAT THE FUCK IS A KILOMETER
             Activated = true;
         };
         for(int i = 0; i < Bomb.GetModuleNames().Count; i++)
@@ -210,9 +209,9 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
             }
             else continue;
         }
-
-        delay = (float)(Rnd.Range(SHORTEST, LONGEST+1));
-        Debug.LogFormat("[Actions and Consequences #{0}] Next number block will fall in {1} seconds.", ModuleId, delay);
+        NonBosses = Bomb.GetSolvableModuleNames().Count(a => !IgnoredModules.Contains(a)); //WHAT THE FUCK IS A KILOMETER
+        delay = Rnd.Range((float)SHORTEST, LONGEST+1);
+        Debug.LogFormat("[Actions and Consequences #{0}] Next number block will fall in {1} seconds.", ModuleId, delay.ToString("00.00"));
         TopDisplay.text = "";
 
         //solvableModules = Bomb.GetSolvableModuleNames().Count;
@@ -466,7 +465,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
                 case 4:
                     UpdateBlockDisplay(-1); //clears blocks
                     lastBlockToDisplayDuringRecovery = lastBlockToDisplayDuringRecovery < 5 ? BlockList.Count : 5;
-                    TopDisplay.text = solutionPointer > 6 ? solution.Substring(solutionPointer - 5, 7) : solution.Substring(0, solutionPointer);
+                    TopDisplay.text = solutionPointer > 6 ? solution.Substring(solutionPointer - 7, 7) : solution.Substring(0, solutionPointer);
                     recovery = false;
                     break;
                 default:
@@ -586,8 +585,8 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         if(timer > delay)
         {
             GenerateNewBlock(GenerateYellowValue());
-            delay = (float)(Rnd.Range(SHORTEST, LONGEST + 1));
-            Debug.LogFormat("[Actions and Consequences #{0}] At {2}, next number block will fall in {1} seconds.", ModuleId, delay, Bomb.GetFormattedTime());
+            delay = Rnd.Range((float)SHORTEST, LONGEST + 1);
+            Debug.LogFormat("[Actions and Consequences #{0}] At {2}, next number block will fall in {1} seconds.", ModuleId, delay.ToString("00.00"), Bomb.GetFormattedTime());
             timer = 0;
         }
         //always sets the things to the thing
@@ -598,6 +597,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         //        new Vector3(Blocks[i].transform.position.x, Blocks[i].transform.position.y + 0.004f, Blocks[i].transform.position.z + 0.0005f);
         //}
         //THANK YOU BLANANAS2
+        var curSolvesNotIgnored = Bomb.GetSolvedModuleNames().Count(a => !IgnoredModules.Contains(a));
         Solves = Bomb.GetSolvedModuleNames().Count;
         if (Solves > SolveList.Count)
         {
@@ -613,7 +613,7 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
             }
             else
             {
-                Debug.LogFormat("[Actions and Consequences #{0}] Ignored module has been solved: {1}", ModuleId, MostRecent);
+                Debug.LogFormat("<Actions and Consequences #{0}> Ignored module has been solved: {1}", ModuleId, MostRecent);
                 SolveList.Add(MostRecent);
                 IgnoredSolved++;
             }
@@ -624,10 +624,13 @@ public class ActionsAndConsequencesScript : MonoBehaviour {
         strikes = Bomb.GetStrikes();
         
         //Debug.LogFormat("[Actions and Consequences #{0}] Solved modules ({1}) - Solved ignored modules ({2}) = {3} ; expect {4}", ModuleId, Bomb.GetSolvedModuleNames().Count, IgnoredSolveds.Count, Bomb.GetSolvedModuleNames().Count - IgnoredSolveds.Count, NonBosses);
-        if(SolveList.Count - IgnoredSolved == NonBosses)
+        if(SolveList.Count - IgnoredSolved >= NonBosses)
         {
             if (/*Bomb.GetSolvableModuleNames().Count - IgnoredModules.Length <= 0*/ NonBosses == 0 || solution.Length == 1)
+            {
+                ModuleSolved = true;
                 StartCoroutine(YouDidIt());
+            }
             else
             {
                 Debug.LogFormat("[Actions and Consequences #{0}] Entering input mode in 10 seconds from {1}.", ModuleId, Bomb.GetFormattedTime());

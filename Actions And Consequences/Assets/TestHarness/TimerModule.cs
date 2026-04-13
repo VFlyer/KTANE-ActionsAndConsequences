@@ -49,7 +49,7 @@ public class TimerModule : MonoBehaviour
 
 	private void Start()
 	{
-		if (ZenMode) TimeRemaining = 1.0f;
+		if (ZenMode) TimeRemaining = 0.01f;
 	}
 
 	private int previousTime;
